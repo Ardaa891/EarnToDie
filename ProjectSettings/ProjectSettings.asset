@@ -804,7 +804,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    iPhone: MOREMOUNTAINS_NICEVIBRATIONS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

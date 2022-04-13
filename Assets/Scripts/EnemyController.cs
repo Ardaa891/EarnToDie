@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.NiceVibrations;
+
 
 public class EnemyController : MonoBehaviour
 {
@@ -96,7 +98,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") )
         {
             TurnOnRagdoll();
-            
+            MMVibrationManager.Haptic(HapticTypes.MediumImpact);
 
         }
         if(collision.gameObject.CompareTag("Enemy"))
