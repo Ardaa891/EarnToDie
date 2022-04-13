@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
             if(c.gameObject != gameObject)
             {
                 c.isTrigger = true;
+                c.GetComponent<Rigidbody>().useGravity = false;
                 RagdollParts.Add(c);
             }
             
@@ -50,6 +51,7 @@ public class EnemyController : MonoBehaviour
         foreach(Collider c in RagdollParts)
         {
             c.isTrigger = false;
+            c.GetComponent<Rigidbody>().useGravity = true;
             //c.attachedRigidbody.velocity = Vector3.zero;
         }
     }
