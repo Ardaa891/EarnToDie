@@ -8,7 +8,7 @@ public class ClickOrTapToExplode : MonoBehaviour {
 
 
 
-#if UNITY_EDITOR || (!UNITY_EDITOR && !(UNITY_IPHONE || UNITY_ANDROID))
+#if UNITY_EDITOR || (!UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID))
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

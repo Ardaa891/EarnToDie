@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public float generalSpeed;
     public bool onGround;
 
+    public GameObject pitBar, rocket, tireSpikes, windowBars;
+
+    public float distance;
    
     
     
@@ -21,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         Current = this;
         rb = GetComponent<Rigidbody>();
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
    
@@ -32,7 +36,8 @@ public class PlayerController : MonoBehaviour
         generalSpeed = rb.velocity.z;
 
         Physics.gravity = new Vector3(0, -15, 0);
-       
+        distance = (transform.position.z / 2);
+
         if (GameManager.Current.isGameActive && yPos < 2 && generalSpeed <=20)
         {
             
