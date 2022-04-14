@@ -69,8 +69,8 @@ public class EnemyController : MonoBehaviour
             c.GetComponent<Rigidbody>().AddForce(xForce, yForce, zForce, ForceMode.Impulse);
             //c.attachedRigidbody.velocity = Vector3.zero;
         }
-
-        Die();
+        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+        StartCoroutine(Die());
     }
 
     void TurnOnRagdollv2()
@@ -81,7 +81,7 @@ public class EnemyController : MonoBehaviour
 
         anim.enabled = false;
         anim.avatar = null;
-
+       
         foreach (Collider c in RagdollParts)
         {
             c.isTrigger = false;
@@ -89,8 +89,10 @@ public class EnemyController : MonoBehaviour
             c.GetComponent<Rigidbody>().AddForce(1, 1, 2, ForceMode.Impulse);
             //c.attachedRigidbody.velocity = Vector3.zero;
         }
+        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+        StartCoroutine(Die());
 
-        Die();
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -98,13 +100,17 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") )
         {
             TurnOnRagdoll();
-            MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+           
 
         }
         if(collision.gameObject.CompareTag("Enemy"))
         {
             TurnOnRagdollv2();
-            
+            Debug.Log("hit");
+        }
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            TurnOnRagdollv2();
         }
 
         
