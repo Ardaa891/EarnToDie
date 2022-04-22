@@ -7,6 +7,11 @@ TagManager:
   - Ground
   - Enemy
   - Box
+  - road2
+  - road1
+  - Top
+  - road3
+  - road4
   layers:
   - Default
   - TransparentFX

@@ -16,6 +16,7 @@ public class ClickOrTapToExplode : MonoBehaviour {
 			GetComponent<BoxCollider>().enabled = false;
 			StartExplosion();
 			MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+			CarController.Current.ChangeHealth(-5);
 		}
     }
 #endif

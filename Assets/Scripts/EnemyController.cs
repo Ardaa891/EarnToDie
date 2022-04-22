@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.NiceVibrations;
+using DG.Tweening;
+
 
 
 public class EnemyController : MonoBehaviour
@@ -17,6 +19,8 @@ public class EnemyController : MonoBehaviour
     public float power = 10.0f;
     public float radius = 5.0f;
     Vector3 explosionPos;
+
+    
 
     private void Awake()
     {
@@ -100,7 +104,9 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") )
         {
             TurnOnRagdoll();
-           
+            CarController.Current.ChangeHealth(-1);
+            CarController.Current.ChangeScore(5);
+            
 
         }
         if(collision.gameObject.CompareTag("Enemy"))
