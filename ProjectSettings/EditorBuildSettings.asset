@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/EarnToDie.unity
+    path: Assets/SplashScreen/Scenes/splashscreen.unity
+    guid: 7d64ba40c053c0a44bc62b385d7514c8
+  - enabled: 1
+    path: Assets/Scenes/OneWayRoad.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
   m_configObjects: {}
