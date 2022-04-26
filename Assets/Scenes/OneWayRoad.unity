@@ -10596,7 +10596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 581188227891882301, guid: 10bffa643f449428f9d3a595a4a56d06, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -83.19
+      value: -83.19043
       objectReference: {fileID: 0}
     - target: {fileID: 581188227891882301, guid: 10bffa643f449428f9d3a595a4a56d06, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12747,7 +12747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740850398957538636, guid: 4051f5e8db59b48bbaf75f91d78cf03d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 210.06982
+      value: 210.07031
       objectReference: {fileID: 0}
     - target: {fileID: 3740850398957538636, guid: 4051f5e8db59b48bbaf75f91d78cf03d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -21697,11 +21697,15 @@ MonoBehaviour:
   windowBar: {fileID: 242060503}
   nitro: {fileID: 1128872750}
   frontBar: {fileID: 1533453078}
-  _tombstone: {fileID: 6865931483422601993, guid: 4296ea4a4780d954cb2b3e6fd0d8908c, type: 3}
+  _tombstone: {fileID: 2423095812460927233, guid: 532189e347d80d042a3a3e7253a9268b, type: 3}
   nitro1: {fileID: 899177874}
   nitro2: {fileID: 947195212}
-  trail1: {fileID: 1134110539}
-  trail2: {fileID: 1110458452}
+  leftWheel: {fileID: 1567551496}
+  rightWheel: {fileID: 1990133790}
+  leftSmoke: {fileID: 0}
+  rightSmoke: {fileID: 0}
+  leftTrail: {fileID: 1134110541}
+  rightTrail: {fileID: 1110458454}
   nitroUpgradeButton: {fileID: 615522951}
   frontBarUpgradeButton: {fileID: 1512478304}
   tireUpgradeButton: {fileID: 2109132520}
@@ -47338,11 +47342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3725839459234904649, guid: 61100580d26e8473e8c19e95b07944ae, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 318.8
+      value: 318.7998
       objectReference: {fileID: 0}
     - target: {fileID: 3725839459234904649, guid: 61100580d26e8473e8c19e95b07944ae, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -124.60881
+      value: -124.6084
       objectReference: {fileID: 0}
     - target: {fileID: 3725839459234904649, guid: 61100580d26e8473e8c19e95b07944ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -62137,7 +62141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740850398957538636, guid: 4051f5e8db59b48bbaf75f91d78cf03d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 210.06982
+      value: 210.07031
       objectReference: {fileID: 0}
     - target: {fileID: 3740850398957538636, guid: 4051f5e8db59b48bbaf75f91d78cf03d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -78732,8 +78736,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.38
-  m_Center: {x: -0.3, y: -0.33, z: 0}
+  m_Radius: 1
+  m_Center: {x: -0.3, y: 0, z: 0}
 --- !u!144 &1678495215
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -94394,8 +94398,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.38
-  m_Center: {x: 0.3, y: -0.33, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0.3, y: 0, z: 0}
 --- !u!54 &1991241608
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -99984,7 +99988,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.74e-43, y: 4.9e-44, z: 0, w: -0.0000011427501}
+  m_BoundingSphereOverride: {x: 3e-45, y: 0, z: 0, w: -2.0000002}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

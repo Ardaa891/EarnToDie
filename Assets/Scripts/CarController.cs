@@ -13,6 +13,7 @@ public class CarController : MonoBehaviour
     public WheelCollider frontLeft, frontRight, backLeft, backRight;
     public Transform frontLeftT, frontRightT, backLeftT, backRightT;
     
+    
     public float motorPower;
     public float breakPower;
     public float yPos;
@@ -72,7 +73,11 @@ public class CarController : MonoBehaviour
     public GameObject tireSpike, doorBar, windowBar, nitro,frontBar;
     public GameObject _tombstone;
     public GameObject nitro1, nitro2;
-    public GameObject trail1, trail2;
+    public GameObject leftWheel, rightWheel;
+    
+    
+    
+    public TrailRenderer leftTrail, rightTrail;
     
 
     public Button nitroUpgradeButton;
@@ -136,7 +141,7 @@ public class CarController : MonoBehaviour
         }
 
         Instantiate(_tombstone, new Vector3(0, PlayerPrefs.GetFloat("lastypos"), PlayerPrefs.GetInt("maxdistance") *4), Quaternion.Euler(PlayerPrefs.GetFloat("lastxrot"),0,0));
-
+        _tombstone.SetActive(true);
     }
     private void Start()
     {
@@ -325,6 +330,23 @@ public class CarController : MonoBehaviour
 
                 //ChangeGas(-0.25f);
 
+                if (leftWheel.GetComponent<TrailScript>().onGround)
+                {
+                    leftTrail.emitting = true;
+                }
+                else
+                {
+                    leftTrail.emitting = false;
+                }
+
+                if (rightWheel.GetComponent<TrailScript>().onGround)
+                {
+                    rightTrail.emitting = true;
+                }
+                else
+                {
+                    rightTrail.emitting = false;
+                }
                
 
             }
@@ -347,6 +369,7 @@ public class CarController : MonoBehaviour
 
                 }*/
 
+                
 
 
             }

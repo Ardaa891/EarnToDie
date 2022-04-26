@@ -9,7 +9,7 @@ public class TrailScript : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
@@ -25,7 +25,7 @@ public class TrailScript : MonoBehaviour
         }
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (onGround)
         {
@@ -34,5 +34,5 @@ public class TrailScript : MonoBehaviour
         {
             trail.emitting = false;
         }
-    }
+    }*/
 }
