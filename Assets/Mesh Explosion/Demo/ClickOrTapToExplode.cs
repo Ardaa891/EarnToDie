@@ -17,6 +17,7 @@ public class ClickOrTapToExplode : MonoBehaviour {
 			StartExplosion();
 			MMVibrationManager.Haptic(HapticTypes.MediumImpact);
 			CarController.Current.ChangeHealth(-5);
+			CarController.Current.ChangeBlendShape(2);
 		}
     }
 #endif

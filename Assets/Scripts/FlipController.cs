@@ -9,7 +9,7 @@ public class FlipController : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             GameManager.Current.GameOver();
-
+            GameManager.Current.gameOverMenu.SetActive(true);
             GameManager.Current.isGameActive = false;
         }
     }

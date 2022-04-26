@@ -11,12 +11,27 @@ public class GameManager : MonoBehaviour
 
     public bool isGameActive = false;
 
-    public GameObject gameStartMenu, gameOverMenu, inGameMenu;
+    public GameObject gameStartMenu, gameOverMenu, gasGameOverMenu, inGameMenu;
     public Button windowUpgradeButton, doorUpgradeButton, tireUpgradeButton, nitroUpgradeButton;
+    public GameObject player;
     
+
+
     void Start()
     {
         Current = this;
+        GasBar.Current.SetMaxGas(CarController.Current.maxGas);
+        if (CarController.Current._doorbar == 1)
+        {
+            CarController.Current.doorBar.SetActive(true);
+            CarController.Current.doorUpgradeButton.transform.gameObject.SetActive(false);
+        }
+
+        if(CarController.Current._windowbar == 1)
+        {
+            CarController.Current.windowUpgradeButton.transform.gameObject.SetActive(false);
+        }
+
     }
 
     
@@ -28,15 +43,19 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         gameStartMenu.SetActive(false);
-        inGameMenu.SetActive(true);
+        //inGameMenu.SetActive(true);
 
         isGameActive = true;
+
+        player.GetComponent<CarController>().enabled = true;
+
+        
         
     }
 
     public void GameOver()
     {
-        gameOverMenu.SetActive(true);
+        //gameOverMenu.SetActive(true);
         inGameMenu.SetActive(false);
         isGameActive = false;
 

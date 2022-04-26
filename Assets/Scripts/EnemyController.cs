@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.NiceVibrations;
 using DG.Tweening;
+using UnityEngine.UI;
 
 
 
 public class EnemyController : MonoBehaviour
 {
+    public static EnemyController Current;
     public List<Collider> RagdollParts = new List<Collider>();
 
     Rigidbody rb;
@@ -19,12 +21,18 @@ public class EnemyController : MonoBehaviour
     public float power = 10.0f;
     public float radius = 5.0f;
     Vector3 explosionPos;
+    public Animator zombieAnim;
 
+    public float speed = 5;
+    public CapsuleCollider capsule;
+
+    public float slidervalue;
     
 
     private void Awake()
     {
         SetRagdollParts();
+        Current = this;
     }
 
     private void Start()
@@ -36,9 +44,31 @@ public class EnemyController : MonoBehaviour
         zForce = Random.Range(15, 30);
 
         explosionPos = transform.position;
+        zombieAnim = GetComponent<Animator>();
+        speed = 5;
+        capsule = GetComponent<CapsuleCollider>();
+        slidervalue = HealthBar.Current.slider.value;
     }
 
-    void SetRagdollParts()
+    private void FixedUpdate()
+    {
+        Vector3 newpos = transform.position;
+
+        if (Input.GetMouseButton(0))
+        {
+            zombieAnim.SetBool("walk", true);
+            zombieAnim.SetBool("idle", false);
+            
+
+        }else if (Input.GetMouseButtonUp(0))
+        {
+            zombieAnim.SetBool("walk", false);
+            zombieAnim.SetBool("idle", true);
+            transform.Translate(0, 0, 0 * Time.fixedDeltaTime);
+        }
+    }
+
+    public void SetRagdollParts()
     {
         Collider[] colliders = GetComponentsInChildren<Collider>();
 
@@ -57,12 +87,13 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    void TurnOnRagdoll()
+   public void TurnOnRagdoll()
     {
         gameObject.GetComponent<BoxCollider>().enabled = false;
+        capsule.enabled = false;
 
         rb.useGravity = false;
-
+        
         anim.enabled = false;
         anim.avatar = null;
 
@@ -77,9 +108,10 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(Die());
     }
 
-    void TurnOnRagdollv2()
+   public void TurnOnRagdollv2()
     {
         gameObject.GetComponent<BoxCollider>().enabled = false;
+        capsule.enabled = false;
 
         rb.useGravity = false;
 
@@ -99,25 +131,25 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+   private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") )
+        /*if (collision.gameObject.CompareTag("Player") )
         {
             TurnOnRagdoll();
             CarController.Current.ChangeHealth(-1);
             CarController.Current.ChangeScore(5);
             
 
-        }
-        if(collision.gameObject.CompareTag("Enemy"))
+        }*/
+        /*if(collision.gameObject.CompareTag("Enemy"))
         {
             TurnOnRagdollv2();
             Debug.Log("hit");
-        }
-        if (collision.gameObject.CompareTag("Box"))
+        }*/
+        /*if (collision.gameObject.CompareTag("Box"))
         {
             TurnOnRagdollv2();
-        }
+        }*/
 
         
     }
@@ -127,5 +159,72 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(5f);
         gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            TurnOnRagdoll();
+            //CarController.Current.ChangeHealth(-3);
+            CarController.Current.ChangeScore(5);
+            //CarController.Current.ChangeBlendShape(3);
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            if (CarController.Current._frontbar == 0 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 0)
+            {
+                CarController.Current.ChangeHealth(-3);
+                CarController.Current.ChangeBlendShape(3);
+            }
+            else if (CarController.Current._frontbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 0)
+            {
+                CarController.Current.ChangeHealth(-2);
+                CarController.Current.ChangeBlendShape(2);
+            }else if(CarController.Current._windowbar == 1 && CarController.Current._frontbar == 0 && CarController.Current._doorbar == 0)
+            {
+                CarController.Current.ChangeHealth(-2);
+                CarController.Current.ChangeBlendShape(2);
+            }
+            else if (CarController.Current._doorbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._frontbar == 0)
+            {
+                CarController.Current.ChangeHealth(-2);
+                CarController.Current.ChangeBlendShape(2);
+            }else if(CarController.Current._frontbar == 1 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 0)
+            {
+                CarController.Current.ChangeHealth(-1.5f);
+                CarController.Current.ChangeBlendShape(1.5f);
+            }else if(CarController.Current._frontbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 1)
+            {
+                CarController.Current.ChangeHealth(-1.5f);
+                CarController.Current.ChangeBlendShape(1.5f);
+            }
+            else if (CarController.Current._frontbar == 0 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 1)
+            {
+                CarController.Current.ChangeHealth(-1.5f);
+                CarController.Current.ChangeBlendShape(1.5f);
+            }
+            else if (CarController.Current._frontbar == 1 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 1)
+            {
+                CarController.Current.ChangeHealth(-1.2f);
+                CarController.Current.ChangeBlendShape(1.2f);
+            }
+
+
+
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+            TurnOnRagdollv2();
+            Debug.Log("hit");
+        }
+
+
+
+    }
+
+
+
+
+
+
 
 }
