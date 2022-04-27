@@ -34,11 +34,16 @@ public class EnemyController : MonoBehaviour
         SetRagdollParts();
         Current = this;
     }
+    /*private void OnEnable()
+    {
+        anim.enabled = true;
+    }*/
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        
         xForce = Random.Range(1, 10);
         yForce = Random.Range(20, 35);
         zForce = Random.Range(15, 30);
@@ -162,7 +167,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("HitPlace"))
         {
             TurnOnRagdoll();
             //CarController.Current.ChangeHealth(-3);

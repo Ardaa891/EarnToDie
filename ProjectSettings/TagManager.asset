@@ -12,6 +12,10 @@ TagManager:
   - Top
   - road3
   - road4
+  - FracturedPieces
+  - Level
+  - HitPlace
+  - tombstone
   layers:
   - Default
   - TransparentFX

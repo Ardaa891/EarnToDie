@@ -37,7 +37,24 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        
+        if (CarController.Current.isRoad1)
+        {
+
+        }
+        if (CarController.Current.isRoad2)
+        {
+            Destroy(CarController.Current.zombies);
+
+        }
+        if (CarController.Current.isRoad3)
+        {
+
+        }
+        if (CarController.Current.isRoad4)
+        {
+            /*Instantiate(CarController.Current.newZombies, new Vector3(CarController.Current.road1.position.x,CarController.Current.road1.position.y, CarController.Current.road1.position.z - 33), Quaternion.Euler(0, 0, 0));
+            CarController.Current.newZombies.transform.SetParent(CarController.Current.parent);*/
+        }
     }
 
     public void StartGame()

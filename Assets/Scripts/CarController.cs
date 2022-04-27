@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using TMPro;
 
 public class CarController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class CarController : MonoBehaviour
     public WheelCollider[] wheels;
     public WheelCollider frontLeft, frontRight, backLeft, backRight;
     public Transform frontLeftT, frontRightT, backLeftT, backRightT;
-    
+    public Transform parent;
     
     public float motorPower;
     public float breakPower;
@@ -36,7 +37,9 @@ public class CarController : MonoBehaviour
     public Transform tombstone;
 
     public Text distanceText;
-    public Text highScoreText;
+    public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI deadHighScoreText;
+    public TextMeshProUGUI gasHighScoreText;
     public Text scoreText;
     
     public  Rigidbody rb;
@@ -66,6 +69,8 @@ public class CarController : MonoBehaviour
     public bool clickedWindowBar;
     public bool clickedTire;
     public bool gasUpgrade1;
+    public bool isRoad1, isRoad2, isRoad3, isRoad4;
+    
 
 
     public GameObject car;
@@ -74,6 +79,10 @@ public class CarController : MonoBehaviour
     public GameObject _tombstone;
     public GameObject nitro1, nitro2;
     public GameObject leftWheel, rightWheel;
+    public GameObject fracturedParent;
+    public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
+    public GameObject zombies;
+    public GameObject newZombies;
     
     
     
@@ -96,8 +105,8 @@ public class CarController : MonoBehaviour
         currentGas = maxGas;
         motorPower = 7000;
         breakPower = 1000;
-        
 
+        highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         _tire = PlayerPrefs.GetInt("tire", 0);
         if (_tire == 1)
         {
@@ -142,6 +151,8 @@ public class CarController : MonoBehaviour
 
         Instantiate(_tombstone, new Vector3(0, PlayerPrefs.GetFloat("lastypos"), PlayerPrefs.GetInt("maxdistance") *4), Quaternion.Euler(PlayerPrefs.GetFloat("lastxrot"),0,0));
         _tombstone.SetActive(true);
+        
+        
     }
     private void Start()
     {
@@ -150,8 +161,9 @@ public class CarController : MonoBehaviour
         currentGas = maxGas;
         rb = GetComponent<Rigidbody>();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        
+        highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
         score = PlayerPrefs.GetInt("currentscore");
+        parent = GameObject.FindGameObjectWithTag("Level").transform.GetChild(0).transform;
         
         //scoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
         //scoreText.text = PlayerPrefs.GetInt("currentscore").ToString();
@@ -162,7 +174,7 @@ public class CarController : MonoBehaviour
         HealthBar.Current.SetMaxHealth(maxHealth);
         GasBar.Current.SetMaxGas(maxGas);
 
-       
+        
 
         _doorbar = PlayerPrefs.GetInt("doorbar", 0);
         if (_doorbar == 1)
@@ -239,16 +251,16 @@ public class CarController : MonoBehaviour
             //distanceText.text = _distance.ToString();
 
 
-            
+
+            PlayerPrefs.SetInt("HighScore", _distance);
 
 
 
-
-            if (_distance > PlayerPrefs.GetInt("HighScore"))
+           /* if (_distance > PlayerPrefs.GetInt("HighScore"))
             {
-                PlayerPrefs.SetInt("HighScore", _distance);
+                
                 //highScoreText.text = _distance.ToString();
-            }
+            }*/
 
             
             
@@ -304,6 +316,24 @@ public class CarController : MonoBehaviour
             frontRight.motorTorque = motorPower * input;
             UpdateWheelPoses();
 
+            if (leftWheel.GetComponent<TrailScript>().onGround)
+            {
+                leftTrail.emitting = true;
+            }
+            else
+            {
+                leftTrail.emitting = false;
+            }
+
+            if (rightWheel.GetComponent<TrailScript>().onGround)
+            {
+                rightTrail.emitting = true;
+            }
+            else
+            {
+                rightTrail.emitting = false;
+            }
+
 
             if (Input.GetMouseButton(0))
             {
@@ -330,23 +360,7 @@ public class CarController : MonoBehaviour
 
                 //ChangeGas(-0.25f);
 
-                if (leftWheel.GetComponent<TrailScript>().onGround)
-                {
-                    leftTrail.emitting = true;
-                }
-                else
-                {
-                    leftTrail.emitting = false;
-                }
-
-                if (rightWheel.GetComponent<TrailScript>().onGround)
-                {
-                    rightTrail.emitting = true;
-                }
-                else
-                {
-                    rightTrail.emitting = false;
-                }
+                
                
 
             }
@@ -405,6 +419,7 @@ public class CarController : MonoBehaviour
                 PlayerPrefs.SetFloat("lastxrot", lastXRot);
 
                 GameManager.Current.gameOverMenu.SetActive(true);
+                deadHighScoreText.text = _distance.ToString() + " m";
                 
 
 
@@ -418,6 +433,7 @@ public class CarController : MonoBehaviour
                 PlayerPrefs.SetFloat("lastypos", yPos);
                 PlayerPrefs.SetFloat("lastxrot", lastXRot);
                 GameManager.Current.gasGameOverMenu.SetActive(true);
+                gasHighScoreText.text = _distance.ToString() + " m";
             }
             if (hasNitro)
             {
@@ -427,14 +443,10 @@ public class CarController : MonoBehaviour
                 SetMotorPower();
             }
 
-            /*if (currentGas <= 0)
+            if (SetParent.current.smashedTomb)
             {
-                GameManager.Current.GameOver();
-                //GameManager.Current.isGameActive = false;
-                rb.velocity = Vector3.zero;
-                PlayerPrefs.SetInt("maxdistance", _distance);
-                GameManager.Current.gasGameOverMenu.SetActive(true);
-            }*/
+                StartCoroutine(DestroyTomb());
+            }
 
 
 
@@ -451,27 +463,67 @@ public class CarController : MonoBehaviour
     {
         if (other.CompareTag("road1"))
         {
-            road2.position = new Vector3(road2.position.x, road2.position.y, road1.position.z + 500.0f);
+            //road2.position = new Vector3(road2.position.x, road2.position.y, road1.position.z + 500.0f);
+            //isRoad1 = true;
+            //Instantiate(road2Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
             
         }
         if (other.CompareTag("road2"))
         {
-            road3.position = new Vector3(road3.position.x, road3.position.y, road2.position.z + 500.0f);
-            Debug.Log("road1");
+           //road3.position = new Vector3(road3.position.x, road3.position.y, road2.position.z + 500.0f);
+            //Destroy(zombies);
+            //isRoad2 = true;
+            //Instantiate(road3Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+
         }
         if (other.CompareTag("road3"))
         {
-            road4.position = new Vector3(road4.position.x, road4.position.y, road3.position.z + 500.0f);
+            //road4.position = new Vector3(road4.position.x, road4.position.y, road3.position.z + 500.0f);
+            //isRoad3 = true;
+            //Instantiate(road4Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
         }
         if (other.CompareTag("road4"))
         {
-            road1.position = new Vector3(road1.position.x, road1.position.y, road4.position.z + 500.0f);
+            //road1.position = new Vector3(road1.position.x, road1.position.y, road4.position.z + 500.0f);
+            /*Instantiate(newZombies, new Vector3(road1.position.x, road1.position.y, road1.position.z - 33), Quaternion.Euler(0, 0, 0));
+            newZombies.transform.SetParent(parent);
+            isRoad4 = true;*/
+            //Instantiate(road1Prefab, new Vector3(other.transform.GetComponentInParent<Transform>(). position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+
         }
 
         
+        
     }
 
-    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("road1"))
+        {
+            
+            isRoad1 = false;
+
+        }
+        if (other.CompareTag("road2"))
+        {
+           
+            isRoad2 = false;
+
+        }
+        if (other.CompareTag("road3"))
+        {
+          
+            isRoad3 = false;
+        }
+        if (other.CompareTag("road4"))
+        {
+            
+            isRoad4 = false;
+
+        }
+    }
+
+
 
     public void ChangeScore(int value)
     {
@@ -684,6 +736,14 @@ public class CarController : MonoBehaviour
         _transform.rotation = _quat;
     }
 
+
+    IEnumerator DestroyTomb()
+    {
+        yield return new WaitForSecondsRealtime(5f);
+
+        fracturedParent.SetActive(false);
+
+    }
 
 
 
