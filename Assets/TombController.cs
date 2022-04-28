@@ -12,14 +12,15 @@ public class TombController : MonoBehaviour
     private void Start()
     {
         tombStonePieces = GameObject.FindGameObjectWithTag("FracturedPieces");
-        gameObject.GetComponent<Rigidbody>().drag = 20;
+        //gameObject.GetComponent<Rigidbody>().drag = 20;
+        GetComponent<Rigidbody>().useGravity = false;
     }
 
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             GetComponent<Rigidbody>().useGravity = true;
         }

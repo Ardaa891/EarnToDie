@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class HitPlace : MonoBehaviour
 {
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
 
+    public Text scoreText;
 
     
     void Start()
@@ -58,5 +61,7 @@ public class HitPlace : MonoBehaviour
             //CarController.Current._tombstone.GetComponent<Rigidbody>().useGravity = true;
             
         }
+
+       
     }
 }

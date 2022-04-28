@@ -16,6 +16,7 @@ TagManager:
   - Level
   - HitPlace
   - tombstone
+  - cartop
   layers:
   - Default
   - TransparentFX
@@ -24,10 +25,10 @@ TagManager:
   - Water
   - UI
   - 
+  - Tombstone
   - 
   - 
-  - 
-  - 
+  - Enemy
   - 
   - 
   - 

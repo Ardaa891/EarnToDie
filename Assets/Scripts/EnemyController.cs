@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
     public float radius = 5.0f;
     Vector3 explosionPos;
     public Animator zombieAnim;
-
+    public Text scoreText;
     public float speed = 5;
     public CapsuleCollider capsule;
 
@@ -170,47 +170,46 @@ public class EnemyController : MonoBehaviour
         if (other.CompareTag("HitPlace"))
         {
             TurnOnRagdoll();
-            //CarController.Current.ChangeHealth(-3);
-            CarController.Current.ChangeScore(5);
-            //CarController.Current.ChangeBlendShape(3);
+
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            if (CarController.Current._frontbar == 0 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 0)
+
+            if (CarController.Current._doorbar == 0)
+            {
+                CarController.Current.ChangeScore(5);
+            }else if(CarController.Current._doorbar == 1)
+            {
+                CarController.Current.ChangeScore(10);
+            }
+            else if (CarController.Current._doorbar == 2)
+            {
+                CarController.Current.ChangeScore(15);
+            }
+            else if (CarController.Current._doorbar == 3)
+            {
+                CarController.Current.ChangeScore(20);
+            }
+
+            
+            if (CarController.Current._frontbar == 0)
             {
                 CarController.Current.ChangeHealth(-3);
                 CarController.Current.ChangeBlendShape(3);
             }
-            else if (CarController.Current._frontbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 0)
-            {
-                CarController.Current.ChangeHealth(-2);
-                CarController.Current.ChangeBlendShape(2);
-            }else if(CarController.Current._windowbar == 1 && CarController.Current._frontbar == 0 && CarController.Current._doorbar == 0)
+            else if (CarController.Current._frontbar == 1)
             {
                 CarController.Current.ChangeHealth(-2);
                 CarController.Current.ChangeBlendShape(2);
             }
-            else if (CarController.Current._doorbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._frontbar == 0)
-            {
-                CarController.Current.ChangeHealth(-2);
-                CarController.Current.ChangeBlendShape(2);
-            }else if(CarController.Current._frontbar == 1 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 0)
+            else if(CarController.Current._frontbar == 2)
             {
                 CarController.Current.ChangeHealth(-1.5f);
                 CarController.Current.ChangeBlendShape(1.5f);
-            }else if(CarController.Current._frontbar == 1 && CarController.Current._windowbar == 0 && CarController.Current._doorbar == 1)
+            }else if(CarController.Current._frontbar == 3)
             {
-                CarController.Current.ChangeHealth(-1.5f);
-                CarController.Current.ChangeBlendShape(1.5f);
+                CarController.Current.ChangeHealth(-0.75f);
+                CarController.Current.ChangeBlendShape(-0.75f);
             }
-            else if (CarController.Current._frontbar == 0 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 1)
-            {
-                CarController.Current.ChangeHealth(-1.5f);
-                CarController.Current.ChangeBlendShape(1.5f);
-            }
-            else if (CarController.Current._frontbar == 1 && CarController.Current._windowbar == 1 && CarController.Current._doorbar == 1)
-            {
-                CarController.Current.ChangeHealth(-1.2f);
-                CarController.Current.ChangeBlendShape(1.2f);
-            }
+           
 
 
 

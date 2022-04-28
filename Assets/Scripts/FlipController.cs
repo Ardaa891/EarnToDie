@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class FlipController : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public static FlipController Current;
+
+    public bool flipped;
+
+    private void Awake()
     {
-        if (other.CompareTag("Ground"))
+        Current = this;
+    }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
         {
             GameManager.Current.GameOver();
-            GameManager.Current.gameOverMenu.SetActive(true);
+            //GameManager.Current.gameOverMenu.SetActive(true);
             GameManager.Current.isGameActive = false;
+            flipped = true;
         }
     }
 }

@@ -40,6 +40,7 @@ public class CarController : MonoBehaviour
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI deadHighScoreText;
     public TextMeshProUGUI gasHighScoreText;
+    public TextMeshProUGUI flipHighScoreText;
     public Text scoreText;
     
     public  Rigidbody rb;
@@ -75,9 +76,9 @@ public class CarController : MonoBehaviour
 
     public GameObject car;
     public GameObject crashedCar;
-    public GameObject tireSpike, doorBar, windowBar, nitro,frontBar;
+    public GameObject tireSpike, doorBar, windowBar, nitro,frontBar,frontbar2,frontbar3;
     public GameObject _tombstone;
-    public GameObject nitro1, nitro2;
+    //public GameObject nitro1, nitro2;
     public GameObject leftWheel, rightWheel;
     public GameObject fracturedParent;
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
@@ -89,10 +90,10 @@ public class CarController : MonoBehaviour
     public TrailRenderer leftTrail, rightTrail;
     
 
-    public Button nitroUpgradeButton;
-    public Button frontBarUpgradeButton;
+    public Button nitroUpgradeButton, nitroUpgradeButton2, nitroUpgradeButton3;
+    public Button frontBarUpgradeButton, frontBarUpgradeButton2, frontBarUpgradeButton3;
     public Button tireUpgradeButton;
-    public Button doorUpgradeButton;
+    public Button doorUpgradeButton, doorUpgradeButton2, doorUpgradeButton3;
     public Button windowUpgradeButton;
 
     
@@ -107,38 +108,47 @@ public class CarController : MonoBehaviour
         breakPower = 1000;
 
         highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-        _tire = PlayerPrefs.GetInt("tire", 0);
+        highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
+        /*_tire = PlayerPrefs.GetInt("tire", 0);
         if (_tire == 1)
         {
             tireSpike.SetActive(true);
             tireUpgradeButton.transform.gameObject.SetActive(false);
-        }
+        }*/
         _nitro = PlayerPrefs.GetInt("nitro", 0);
         if (_nitro ==1)
         {
-            nitro.SetActive(true);
+            //nitro.SetActive(true);
             isNitro = true;
             hasNitro = true;
-            motorPower = 15000;
+            //motorPower = 15000;
             nitroUpgradeButton.transform.gameObject.SetActive(false);
         }
-        /*_doorbar = PlayerPrefs.GetInt("doorbar", 0);
-        if (_doorbar == 1)
+        if (_nitro == 2)
         {
-            isDoorBar = true;
-            hasDoorBar = true;
-            doorBar.SetActive(true);
-            doorUpgradeButton.transform.gameObject.SetActive(false);
-            
-        }*/
-        _windowbar = PlayerPrefs.GetInt("window", 0);
-        if (_windowbar ==1)
-        {
-            
-            windowBar.SetActive(true);
-            windowUpgradeButton.transform.gameObject.SetActive(false);
-           
+            //nitro.SetActive(true);
+            isNitro = true;
+            hasNitro = true;
+            //motorPower = 15000;
+            nitroUpgradeButton.transform.gameObject.SetActive(false);
         }
+        if (_nitro == 3)
+        {
+            //nitro.SetActive(true);
+            isNitro = true;
+            hasNitro = true;
+            //motorPower = 15000;
+            nitroUpgradeButton.transform.gameObject.SetActive(false);
+        }
+
+        /* _windowbar = PlayerPrefs.GetInt("window", 0);
+         if (_windowbar ==1)
+         {
+
+             windowBar.SetActive(true);
+             windowUpgradeButton.transform.gameObject.SetActive(false);
+
+         }*/
 
         _frontbar = PlayerPrefs.GetInt("frontbar", 0);
         if(_frontbar == 1)
@@ -148,11 +158,26 @@ public class CarController : MonoBehaviour
 
             
         }
+        if (_frontbar == 2)
+        {
+            frontbar2.SetActive(true);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+
+
+        }
+        if (_frontbar == 3)
+        {
+            frontbar3.SetActive(true);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(false);
+
+
+        }
 
         Instantiate(_tombstone, new Vector3(0, PlayerPrefs.GetFloat("lastypos"), PlayerPrefs.GetInt("maxdistance") *4), Quaternion.Euler(PlayerPrefs.GetFloat("lastxrot"),0,0));
         _tombstone.SetActive(true);
         
-        
+
+
     }
     private void Start()
     {
@@ -161,16 +186,10 @@ public class CarController : MonoBehaviour
         currentGas = maxGas;
         rb = GetComponent<Rigidbody>();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
+        
         score = PlayerPrefs.GetInt("currentscore");
         parent = GameObject.FindGameObjectWithTag("Level").transform.GetChild(0).transform;
-        
-        //scoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
-        //scoreText.text = PlayerPrefs.GetInt("currentscore").ToString();
         rb.centerOfMass = centerOfMass;
-        //highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
-        
-
         HealthBar.Current.SetMaxHealth(maxHealth);
         GasBar.Current.SetMaxGas(maxGas);
 
@@ -181,19 +200,36 @@ public class CarController : MonoBehaviour
         {
             isDoorBar = true;
             hasDoorBar = true;
-            doorBar.SetActive(true);
+            //doorBar.SetActive(true);
             doorUpgradeButton.transform.gameObject.SetActive(false);
+
+        }
+        if (_doorbar == 2)
+        {
+            isDoorBar = true;
+            hasDoorBar = true;
+            //doorBar.SetActive(true);
+            doorUpgradeButton2.transform.gameObject.SetActive(false);
+
+        }
+        if (_doorbar == 3)
+        {
+            isDoorBar = true;
+            hasDoorBar = true;
+            //doorBar.SetActive(true);
+            doorUpgradeButton3.transform.gameObject.SetActive(false);
 
         }
 
 
 
-        if (score < 50)
+
+        if (score < 100)
         {
             nitroUpgradeButton.interactable = false;
             frontBarUpgradeButton.interactable = false;
-            tireUpgradeButton.interactable = false;
-            windowUpgradeButton.interactable = false;
+            //tireUpgradeButton.interactable = false;
+            //windowUpgradeButton.interactable = false;
             doorUpgradeButton.interactable = false;
 
 
@@ -201,37 +237,71 @@ public class CarController : MonoBehaviour
 
         if (_nitro ==1)
         {
-            windowUpgradeButton.transform.gameObject.SetActive(true);
+            
             nitroUpgradeButton.transform.gameObject.SetActive(false);
+            nitroUpgradeButton2.transform.gameObject.SetActive(true);
         }
 
-        if(_windowbar == 1)
+        if (_nitro == 2)
+        {
+
+            nitroUpgradeButton2.transform.gameObject.SetActive(false);
+            nitroUpgradeButton3.transform.gameObject.SetActive(true);
+        }
+        if (_nitro == 3)
+        {
+
+            
+            nitroUpgradeButton3.transform.gameObject.SetActive(false);
+        }
+
+        /*if(_windowbar == 1)
         {
             tireUpgradeButton.transform.gameObject.SetActive(true);
             windowUpgradeButton.interactable = false;
-        }
+        }*/
 
-        if(_frontbar == 1)
+        if (_frontbar == 1)
         {
-            doorUpgradeButton.transform.gameObject.SetActive(true);
+            
             frontBarUpgradeButton.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(true);
         }
-        if(_doorbar == 1)
+        if (_frontbar == 2)
         {
-            doorUpgradeButton.interactable = false;
-            doorBar.transform.gameObject.SetActive(false);
+
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(true);
         }
-        if(_tire == 1)
+        if (_frontbar == 3)
+        {
+
+            
+            frontBarUpgradeButton3.transform.gameObject.SetActive(false);
+        }
+        if (_doorbar == 1)
+        {
+
+            doorUpgradeButton.transform.gameObject.SetActive(false);
+            doorUpgradeButton2.transform.gameObject.SetActive(true);
+        }
+        if (_doorbar == 2)
+        {
+
+            doorUpgradeButton2.transform.gameObject.SetActive(false);
+            doorUpgradeButton3.transform.gameObject.SetActive(true);
+        }
+        if (_doorbar == 3)
+        {
+
+            
+            doorUpgradeButton3.transform.gameObject.SetActive(false);
+        }
+        /*if(_tire == 1)
         {
             tireUpgradeButton.interactable = false;
             tireUpgradeButton.transform.gameObject.SetActive(false);
-        }
-        
-        
-
-       
-        
-        
+        }*/
 
 
 
@@ -248,43 +318,9 @@ public class CarController : MonoBehaviour
             Physics.gravity = new Vector3(0, -20, 0);
             distance = (transform.position.z / 4);
             _distance = Mathf.RoundToInt(distance);
-            //distanceText.text = _distance.ToString();
-
-
-
             PlayerPrefs.SetInt("HighScore", _distance);
 
 
-
-           /* if (_distance > PlayerPrefs.GetInt("HighScore"))
-            {
-                
-                //highScoreText.text = _distance.ToString();
-            }*/
-
-            
-            
-
-            /*if (generalSpeed < 0 && isBreaking)
-            {
-                rb.velocity = new Vector3(0,rb.velocity.y, 0);
-            }
-
-            if (generalSpeed <= 20)
-            {
-                motorPower = 7000.0f;
-                breakPower = 1000.0f;
-            }
-            if (generalSpeed > 20 && generalSpeed <= 40)
-            {
-                motorPower = 4000.0f;
-                breakPower = 1500.0f;
-            }
-            if (generalSpeed > 40)
-            {
-                motorPower = 3000.0f;
-                breakPower = 2000.0f;
-            }*/
         }
         else
         {
@@ -307,11 +343,6 @@ public class CarController : MonoBehaviour
 
         if (GameManager.Current.isGameActive && yPos <= 20)
         {
-            /*foreach (var wheel in wheels)
-            {
-                wheel.motorTorque = motorPower * input;
-            }*/
-
             frontLeft.motorTorque = motorPower * input;
             frontRight.motorTorque = motorPower * input;
             UpdateWheelPoses();
@@ -346,23 +377,19 @@ public class CarController : MonoBehaviour
                 backRight.brakeTorque = 0;
 
                 zombieRun = true;
-
-                //trail1.GetComponent<TrailRenderer>().emitting = true;
-                //trail2.GetComponent<TrailRenderer>().emitting = true;
-
-
-                /*foreach (var wheel in wheels)
+                if(_nitro == 0)
                 {
-                    wheel.brakeTorque = 0;
-
-
-                }*/
-
-                //ChangeGas(-0.25f);
-
-                
-               
-
+                    ChangeGas(-0.1f);
+                }else if(_nitro == 1)
+                {
+                    ChangeGas(-0.05f);
+                }else if (_nitro == 2)
+                {
+                    ChangeGas(-0.025f);
+                }else if (_nitro == 3)
+                {
+                    ChangeGas(-0.0125f);
+                }
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -374,16 +401,6 @@ public class CarController : MonoBehaviour
                 backRight.brakeTorque = breakPower;
 
                 zombieRun = false;
-
-
-                /*foreach (var wheel in wheels)
-                {
-                    wheel.brakeTorque = breakPower;
-
-
-                }*/
-
-                
 
 
             }
@@ -413,7 +430,9 @@ public class CarController : MonoBehaviour
                 crashedCar.SetActive(true);
                 car.SetActive(false);
                 GameManager.Current.GameOver();
+                GameManager.Current.gameOverMenu.SetActive(true);
                 rb.velocity = Vector3.zero;
+                rb.isKinematic = true;
                 PlayerPrefs.SetInt("maxdistance", _distance);
                 PlayerPrefs.SetFloat("lastypos", yPos);
                 PlayerPrefs.SetFloat("lastxrot", lastXRot);
@@ -426,6 +445,7 @@ public class CarController : MonoBehaviour
             }else if(currentGas <= 0)
             {
                 GameManager.Current.GameOver();
+                GameManager.Current.gasGameOverMenu.SetActive(true);
                 //GameManager.Current.isGameActive = false;
                 rb.velocity = Vector3.zero;
                 rb.isKinematic = true;
@@ -435,13 +455,15 @@ public class CarController : MonoBehaviour
                 GameManager.Current.gasGameOverMenu.SetActive(true);
                 gasHighScoreText.text = _distance.ToString() + " m";
             }
-            if (hasNitro)
+            /*if (hasNitro)
             {
-                motorPower = 15000;
+                motorPower = 10000;
             }else if (!hasNitro && generalSpeed <= 20)
             {
-                SetMotorPower();
-            }
+                //SetMotorPower();
+            }*/
+
+            
 
             if (SetParent.current.smashedTomb)
             {
@@ -459,72 +481,6 @@ public class CarController : MonoBehaviour
       
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("road1"))
-        {
-            //road2.position = new Vector3(road2.position.x, road2.position.y, road1.position.z + 500.0f);
-            //isRoad1 = true;
-            //Instantiate(road2Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
-            
-        }
-        if (other.CompareTag("road2"))
-        {
-           //road3.position = new Vector3(road3.position.x, road3.position.y, road2.position.z + 500.0f);
-            //Destroy(zombies);
-            //isRoad2 = true;
-            //Instantiate(road3Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
-
-        }
-        if (other.CompareTag("road3"))
-        {
-            //road4.position = new Vector3(road4.position.x, road4.position.y, road3.position.z + 500.0f);
-            //isRoad3 = true;
-            //Instantiate(road4Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
-        }
-        if (other.CompareTag("road4"))
-        {
-            //road1.position = new Vector3(road1.position.x, road1.position.y, road4.position.z + 500.0f);
-            /*Instantiate(newZombies, new Vector3(road1.position.x, road1.position.y, road1.position.z - 33), Quaternion.Euler(0, 0, 0));
-            newZombies.transform.SetParent(parent);
-            isRoad4 = true;*/
-            //Instantiate(road1Prefab, new Vector3(other.transform.GetComponentInParent<Transform>(). position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
-
-        }
-
-        
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("road1"))
-        {
-            
-            isRoad1 = false;
-
-        }
-        if (other.CompareTag("road2"))
-        {
-           
-            isRoad2 = false;
-
-        }
-        if (other.CompareTag("road3"))
-        {
-          
-            isRoad3 = false;
-        }
-        if (other.CompareTag("road4"))
-        {
-            
-            isRoad4 = false;
-
-        }
-    }
-
-
-
     public void ChangeScore(int value)
     {
         score += value;
@@ -535,9 +491,7 @@ public class CarController : MonoBehaviour
     public void ChangeHealth(float value)
     {
         currentHealth += value;
-        //blendvalue += value;
         HealthBar.Current.SetHealth(currentHealth);
-        //car.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, blendvalue);
     }
 
     public void ChangeGas(float value)
@@ -554,16 +508,8 @@ public class CarController : MonoBehaviour
         car.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, blendvalue);
     }
 
-    public void Tire()
+    /*public void Tire()
     {
-        /*isTireSpike = true;
-        //tireSpike.SetActive(true);
-        ChangeScore(-5);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        PlayerPrefs.SetInt("currentscore", PlayerPrefs.GetInt("MaxScore") - 5);
-        _tire = 1;
-        PlayerPrefs.SetInt("tire", _tire);*/
-
         isTireSpike = true;
         hasTireSpike = true;
         tireSpike.SetActive(true);
@@ -573,99 +519,144 @@ public class CarController : MonoBehaviour
         ChangeScore(-50);
 
         clickedTire = true;
-       // tireUpgradeButton.transform.gameObject.SetActive(false);
-
-
-    }
+    }*/
     public void Nitro()
     {
         isNitro = true;
         hasNitro = true;
-        nitro.SetActive(true);
-       // nitro.SetActive(true);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //ChangeScore(-5);
-        //PlayerPrefs.SetInt("currentscore", PlayerPrefs.GetInt("MaxScore") - 50);
+        //nitro.SetActive(true);
         GameManager.Current.StartGame();
         _nitro = 1;
         PlayerPrefs.SetInt("nitro", _nitro);
-        ChangeScore(-50);
+        ChangeScore(-100);
 
         clickedNitro = true;
-       // nitroUpgradeButton.transform.gameObject.SetActive(false);
-       // windowUpgradeButton.transform.gameObject.SetActive(true);
+    }
 
+    public void Nitro2()
+    {
+        isNitro = true;
+        hasNitro = true;
+       // nitro.SetActive(true);
+        GameManager.Current.StartGame();
+        _nitro = 2;
+        PlayerPrefs.SetInt("nitro", _nitro);
+        ChangeScore(-200);
 
+        clickedNitro = true;
+    }
+
+    public void Nitro3()
+    {
+        isNitro = true;
+        hasNitro = true;
+        //nitro.SetActive(true);
+        GameManager.Current.StartGame();
+        _nitro = 3;
+        PlayerPrefs.SetInt("nitro", _nitro);
+        ChangeScore(-300);
+
+        clickedNitro = true;
     }
 
     public void FrontBar()
     {
         isFrontBar = true;
         hasFrontBar = true;
-        frontBar.SetActive(true);
+        //frontBar.SetActive(true);
         GameManager.Current.StartGame();
         _frontbar = 1;
         PlayerPrefs.SetInt("frontbar", _frontbar);
-        ChangeScore(-50);
+        ChangeScore(-100);
 
         clickedFrontBar = true;
+    }
 
-        //frontBarUpgradeButton.transform.gameObject.SetActive(false);
-        //doorUpgradeButton.transform.gameObject.SetActive(true);
-        
-        
-        
+    public void FrontBar2()
+    {
+        isFrontBar = true;
+        hasFrontBar = true;
+        //frontBar.SetActive(true);
+        GameManager.Current.StartGame();
+        _frontbar = 2;
+        PlayerPrefs.SetInt("frontbar", _frontbar);
+        ChangeScore(-200);
+
+        clickedFrontBar = true;
+    }
+
+    public void FrontBar3()
+    {
+        isFrontBar = true;
+        hasFrontBar = true;
+        //frontBar.SetActive(true);
+        GameManager.Current.StartGame();
+        _frontbar = 3;
+        PlayerPrefs.SetInt("frontbar", _frontbar);
+        ChangeScore(-300);
+
+        clickedFrontBar = true;
     }
     public void DoorBar()
     {
-        /*isDoorBar = true;
-       // doorBar.SetActive(true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        ChangeScore(-5);
-        PlayerPrefs.SetInt("currentscore", PlayerPrefs.GetInt("MaxScore") - 5);
-        _doorbar = 1;
-        PlayerPrefs.SetInt("doorbar", _doorbar);*/
-
         isDoorBar = true;
         hasDoorBar = true;
-        doorBar.SetActive(true);
+        //doorBar.SetActive(true);
         GameManager.Current.StartGame();
         _doorbar = 1;
         PlayerPrefs.SetInt("doorbar", _doorbar);
-        ChangeScore(-50);
+        ChangeScore(-100);
 
         clickedDoorBar = true;
 
-        //doorUpgradeButton.transform.gameObject.SetActive(false);
     }
-    public void WindowBar()
+
+    public void DoorBar2()
     {
-        /*isWindowBar = true;
-        //windowBar.SetActive(true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        ChangeScore(-5);
-        PlayerPrefs.SetInt("currentscore", PlayerPrefs.GetInt("MaxScore") - 5);
-        _windowbar = 1;
-        PlayerPrefs.SetInt("windowbar", _windowbar);*/
-
-        isWindowBar = true;
-        hasWindowBar = true;
-        windowBar.SetActive(true);
+        isDoorBar = true;
+        hasDoorBar = true;
+        //doorBar.SetActive(true);
         GameManager.Current.StartGame();
-        _windowbar = 1;
-        PlayerPrefs.SetInt("window", _windowbar);
-        ChangeScore(-50);
+        _doorbar = 2;
+        PlayerPrefs.SetInt("doorbar", _doorbar);
+        ChangeScore(-200);
 
-        clickedWindowBar = true;
+        clickedDoorBar = true;
 
-        
     }
 
-    public void SetMotorPower()
+    public void DoorBar3()
+    {
+        isDoorBar = true;
+        hasDoorBar = true;
+        //doorBar.SetActive(true);
+        GameManager.Current.StartGame();
+        _doorbar = 3;
+        PlayerPrefs.SetInt("doorbar", _doorbar);
+        ChangeScore(-300);
+
+        clickedDoorBar = true;
+
+    }
+    /* public void WindowBar()
+     {
+         isWindowBar = true;
+         hasWindowBar = true;
+         windowBar.SetActive(true);
+         GameManager.Current.StartGame();
+         _windowbar = 1;
+         PlayerPrefs.SetInt("window", _windowbar);
+         ChangeScore(-50);
+
+         clickedWindowBar = true;
+
+     }*/
+
+    /*public void SetMotorPower()
     {
         motorPower = 7000.0f;
         hasNitro = false;
-    }
+    }*/
 
     void UpdateWheelPoses()
     {
@@ -675,26 +666,11 @@ public class CarController : MonoBehaviour
         SetFrontRightPose(frontRight, frontRightT);
     }
 
-    /*void UpdateWheelPose(WheelCollider _collider, Transform _transform)
-    {
-        Vector3 _pos = _transform.position;
-        Quaternion _quat = Quaternion.Euler( _transform.rotation.x, 180,  _transform.rotation.z);
-
-        _collider.GetWorldPose(out _pos, out _quat);
-
-        _transform.position = _pos;
-        _transform.rotation =  _quat;
-
-      
-    }*/
 
     void SetFrontLeftPose(WheelCollider _collider, Transform _transform)
     {
         Vector3 _pos = new Vector3(1, _transform.position.y, -1.5f);
         Quaternion _quat = Quaternion.Euler(_transform.rotation.x, 0, _transform.rotation.z);
-
-        //_collider.transform.position = _pos;
-        //_collider.transform.rotation = _quat;
         _collider.GetWorldPose(out _pos, out _quat);
         _transform.position = _pos;
         _transform.rotation = _quat;
@@ -705,10 +681,6 @@ public class CarController : MonoBehaviour
         Vector3 _pos = new Vector3(-1, _transform.position.y, -1.5f);
         Quaternion _quat = Quaternion.Euler(_transform.rotation.x, 0, _transform.rotation.z);
         _collider.GetWorldPose(out _pos, out _quat);
-        //_collider.transform.position = _pos;
-        //_collider.transform.rotation = _quat;
-        //_collider.GetWorldPose(out _pos, out _quat);
-
         _transform.position = _pos;
         _transform.rotation = _quat;
     }
@@ -717,9 +689,6 @@ public class CarController : MonoBehaviour
         Vector3 _pos = new Vector3(1, _transform.position.y, 1.5f);
         Quaternion _quat = Quaternion.Euler(_transform.rotation.x, 0, _transform.rotation.z);
         _collider.GetWorldPose(out _pos, out _quat);
-        //_collider.transform.position = _pos;
-        //_collider.transform.rotation = _quat;
-
         _transform.position = _pos;
         _transform.rotation = _quat;
     }
@@ -728,10 +697,6 @@ public class CarController : MonoBehaviour
         Vector3 _pos = new Vector3(-1, _transform.position.y, 1.5f);
         Quaternion _quat = Quaternion.Euler(_transform.rotation.x, 0, _transform.rotation.z);
         _collider.GetWorldPose(out _pos, out _quat);
-        //_collider.transform.position = _pos;
-        //_collider.transform.rotation = _quat;
-
-
         _transform.position = _pos;
         _transform.rotation = _quat;
     }

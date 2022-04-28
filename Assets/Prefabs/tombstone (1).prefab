@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8881138018471118774}
   - component: {fileID: 6459882306429311302}
   - component: {fileID: 3434390426627135505}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HighScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,15 +27,15 @@ RectTransform:
   m_GameObject: {fileID: 156618149580763313}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -240}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1155754275233702242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2593}
+  m_AnchoredPosition: {x: 0, y: 3596}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6459882306429311302
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 207m
+  m_text: 96m
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1b9276bae6dc7154199d08fb3bcc5385, type: 2}
   m_sharedMaterial: {fileID: 5538921048320147815, guid: 1b9276bae6dc7154199d08fb3bcc5385, type: 2}
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 200
+  m_fontSizeBase: 200
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -1.83
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 5132391830226849292}
   - component: {fileID: 1189026712637742269}
   - component: {fileID: 6580292820265265596}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 5967165265709589429}
   - component: {fileID: 7252309456506458663}
   - component: {fileID: 8977569308930320896}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tombstone (1)
   m_TagString: tombstone
   m_Icon: {fileID: 0}
