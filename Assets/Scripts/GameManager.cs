@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     public GameObject gameStartMenu, gameOverMenu, gasGameOverMenu, inGameMenu;
     public Button windowUpgradeButton, doorUpgradeButton, tireUpgradeButton, nitroUpgradeButton;
     public GameObject player;
-    
 
+    private void Awake()
+    {
+        player.GetComponent<CarController>().enabled = true;
+    }
 
     void Start()
     {
@@ -57,7 +60,7 @@ public class GameManager : MonoBehaviour
 
         isGameActive = true;
 
-        player.GetComponent<CarController>().enabled = true;
+        
 
         
         
