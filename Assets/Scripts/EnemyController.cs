@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
 
     public  int xForce, yForce, zForce;
     public int forceAmount = 500;
-
+    public bool onGround;
     public float power = 10.0f;
     public float radius = 5.0f;
     Vector3 explosionPos;
@@ -209,8 +209,21 @@ public class EnemyController : MonoBehaviour
                 CarController.Current.ChangeHealth(-0.75f);
                 CarController.Current.ChangeBlendShape(-0.75f);
             }
-           
+            else if (CarController.Current._frontbar == 4)
+            {
+                CarController.Current.ChangeHealth(-0.30f);
+                CarController.Current.ChangeBlendShape(-0.30f);
+            }
 
+            if (other.CompareTag("Ground"))
+            {
+                onGround = true;
+
+                if (!onGround)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
 
 
         }

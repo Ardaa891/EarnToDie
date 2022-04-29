@@ -290,12 +290,6 @@ public class CarController : MonoBehaviour
             nitroUpgradeButton3.transform.gameObject.SetActive(false);
         }
 
-        /*if(_windowbar == 1)
-        {
-            tireUpgradeButton.transform.gameObject.SetActive(true);
-            windowUpgradeButton.interactable = false;
-        }*/
-
         if (_frontbar == 1)
         {
             
@@ -387,6 +381,69 @@ public class CarController : MonoBehaviour
 
 
 
+        }
+        if (_nitro == 1)
+        {
+
+            nitroUpgradeButton.transform.gameObject.SetActive(false);
+            nitroUpgradeButton2.transform.gameObject.SetActive(true);
+        }
+
+        if (_nitro == 2)
+        {
+
+            nitroUpgradeButton2.transform.gameObject.SetActive(false);
+            nitroUpgradeButton3.transform.gameObject.SetActive(true);
+        }
+        if (_nitro == 3)
+        {
+
+
+            nitroUpgradeButton3.transform.gameObject.SetActive(false);
+        }
+
+        if (_frontbar == 1)
+        {
+
+            frontBarUpgradeButton.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(true);
+        }
+        if (_frontbar == 2)
+        {
+
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(true);
+        }
+        if (_frontbar == 3)
+        {
+
+
+            frontBarUpgradeButton4.transform.gameObject.SetActive(true);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(false);
+        }
+        if (_frontbar == 4)
+        {
+
+
+            frontBarUpgradeButton4.transform.gameObject.SetActive(false);
+        }
+        if (_doorbar == 1)
+        {
+
+            doorUpgradeButton.transform.gameObject.SetActive(false);
+            doorUpgradeButton2.transform.gameObject.SetActive(true);
+        }
+        if (_doorbar == 2)
+        {
+
+            doorUpgradeButton2.transform.gameObject.SetActive(false);
+            doorUpgradeButton3.transform.gameObject.SetActive(true);
+        }
+        if (_doorbar == 3)
+        {
+
+
+            doorUpgradeButton3.transform.gameObject.SetActive(false);
         }
 
 
