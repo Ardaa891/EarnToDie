@@ -18,8 +18,9 @@ public class FlipController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             GameManager.Current.GameOver();
-            //GameManager.Current.gameOverMenu.SetActive(true);
+            GameManager.Current.gameOverMenu.SetActive(true);
             GameManager.Current.isGameActive = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().velocity = Vector3.zero;
             flipped = true;
         }
     }
