@@ -9,7 +9,7 @@ public class HitPlace : MonoBehaviour
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
 
     public Text scoreText;
-
+    
     
     void Start()
     {
@@ -24,6 +24,11 @@ public class HitPlace : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.CompareTag("Ground"))
+        {
+            CarController.Current.hitGround = true;
+        }
         if (other.CompareTag("road1"))
         {
             //road2.position = new Vector3(road2.position.x, road2.position.y, road1.position.z + 500.0f);
@@ -68,6 +73,73 @@ public class HitPlace : MonoBehaviour
             
         }
 
+        if (other.CompareTag("Enemy"))
+        {
+            /*if (CarController.Current._frontbar == 0)
+            {
+                CarController.Current.ChangeHealth(-3);
+                CarController.Current.ChangeBlendShape(3);
+            }
+            if (CarController.Current._frontbar == 1)
+            {
+                CarController.Current.ChangeHealth(-2);
+                CarController.Current.ChangeBlendShape(2);
+            }
+            if (CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2)
+            {
+                CarController.Current.ChangeHealth(-1.5f);
+                CarController.Current.ChangeBlendShape(1.5f);
+            }
+            if (CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2 && CarController.Current._frontbar3 == 3)
+            {
+                CarController.Current.ChangeHealth(-0.75f);
+                CarController.Current.ChangeBlendShape(-0.75f);
+            }
+            if (CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2 && CarController.Current._frontbar3 == 3 && CarController.Current._frontbar4 == 4)
+            {
+                CarController.Current.ChangeHealth(-0.30f);
+                CarController.Current.ChangeBlendShape(-0.30f);
+            }*/
+
+            if (CarController.Current.armor == 0)
+            {
+                CarController.Current.ChangeHealth(-3);
+                CarController.Current.ChangeBlendShape(3);
+            }
+            else if (CarController.Current.armor == 1)
+            {
+                CarController.Current.ChangeHealth(-2);
+                CarController.Current.ChangeBlendShape(2);
+            }
+            else if (CarController.Current.armor == 2)
+            {
+                CarController.Current.ChangeHealth(-1.5f);
+                CarController.Current.ChangeBlendShape(1.5f);
+            }
+            else if (CarController.Current.armor == 3)
+            {
+                CarController.Current.ChangeHealth(-0.75f);
+                CarController.Current.ChangeBlendShape(-0.75f);
+            }
+            else if (CarController.Current.armor == 4)
+            {
+                CarController.Current.ChangeHealth(-0.30f);
+                CarController.Current.ChangeBlendShape(-0.30f);
+            }
+        }
+
        
+
+       
+    }
+
+   
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            CarController.Current.hitGround = false;
+        }
     }
 }

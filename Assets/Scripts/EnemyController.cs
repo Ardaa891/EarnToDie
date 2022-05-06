@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MoreMountains.NiceVibrations;
+//using MoreMountains.NiceVibrations;
 using DG.Tweening;
 using UnityEngine.UI;
 
@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     public  int xForce, yForce, zForce;
     public int forceAmount = 500;
     public bool onGround;
+    
     public float power = 10.0f;
     public float radius = 5.0f;
     Vector3 explosionPos;
@@ -33,6 +34,11 @@ public class EnemyController : MonoBehaviour
     {
         SetRagdollParts();
         Current = this;
+
+        /*if(CarController.Current._frontbar4 == 4)
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+        }*/
     }
     /*private void OnEnable()
     {
@@ -45,7 +51,7 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
         
         xForce = Random.Range(1, 10);
-        yForce = Random.Range(20, 35);
+        yForce = Random.Range(15, 25);
         zForce = Random.Range(15, 30);
 
         explosionPos = transform.position;
@@ -63,6 +69,8 @@ public class EnemyController : MonoBehaviour
         {
             zombieAnim.SetBool("walk", true);
             zombieAnim.SetBool("idle", false);
+
+            transform.Translate(0, 0, 0.5f * Time.fixedDeltaTime);
             
 
         }else if (Input.GetMouseButtonUp(0))
@@ -71,6 +79,8 @@ public class EnemyController : MonoBehaviour
             zombieAnim.SetBool("idle", true);
             transform.Translate(0, 0, 0 * Time.fixedDeltaTime);
         }
+
+        
     }
 
     public void SetRagdollParts()
@@ -109,7 +119,7 @@ public class EnemyController : MonoBehaviour
             c.GetComponent<Rigidbody>().AddForce(xForce, yForce, zForce, ForceMode.Impulse);
             //c.attachedRigidbody.velocity = Vector3.zero;
         }
-        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+        //MMVibrationManager.Haptic(HapticTypes.MediumImpact);
         StartCoroutine(Die());
     }
 
@@ -130,7 +140,7 @@ public class EnemyController : MonoBehaviour
             c.GetComponent<Rigidbody>().AddForce(1, 1, 2, ForceMode.Impulse);
             //c.attachedRigidbody.velocity = Vector3.zero;
         }
-        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+       // MMVibrationManager.Haptic(HapticTypes.MediumImpact);
         StartCoroutine(Die());
 
         
@@ -138,11 +148,10 @@ public class EnemyController : MonoBehaviour
 
    private void OnCollisionEnter(Collision collision)
     {
-        /*if (collision.gameObject.CompareTag("Player") )
+        /*if (collision.gameObject.CompareTag("Shovel") )
         {
             TurnOnRagdoll();
-            CarController.Current.ChangeHealth(-1);
-            CarController.Current.ChangeScore(5);
+            
             
 
         }*/
@@ -170,7 +179,7 @@ public class EnemyController : MonoBehaviour
         if (other.CompareTag("HitPlace"))
         {
             TurnOnRagdoll();
-
+            //MMVibrationManager.Haptic(HapticTypes.MediumImpact);
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
             if (CarController.Current._doorbar == 0)
@@ -190,7 +199,7 @@ public class EnemyController : MonoBehaviour
             }
 
             
-            if (CarController.Current._frontbar == 0)
+            /*if (CarController.Current._frontbar == 0)
             {
                 CarController.Current.ChangeHealth(-3);
                 CarController.Current.ChangeBlendShape(3);
@@ -200,20 +209,21 @@ public class EnemyController : MonoBehaviour
                 CarController.Current.ChangeHealth(-2);
                 CarController.Current.ChangeBlendShape(2);
             }
-            else if(CarController.Current._frontbar == 2)
+            else if(CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2)
             {
                 CarController.Current.ChangeHealth(-1.5f);
                 CarController.Current.ChangeBlendShape(1.5f);
-            }else if(CarController.Current._frontbar == 3)
+            }
+            else if(CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2 && CarController.Current._frontbar3 == 3)
             {
                 CarController.Current.ChangeHealth(-0.75f);
                 CarController.Current.ChangeBlendShape(-0.75f);
             }
-            else if (CarController.Current._frontbar == 4)
+            else if (CarController.Current._frontbar == 1 && CarController.Current._frontbar2 == 2 && CarController.Current._frontbar3 == 3 && CarController.Current._frontbar4 == 4)
             {
                 CarController.Current.ChangeHealth(-0.30f);
                 CarController.Current.ChangeBlendShape(-0.30f);
-            }
+            }*/
 
             if (other.CompareTag("Ground"))
             {
@@ -232,6 +242,7 @@ public class EnemyController : MonoBehaviour
             GetComponent<CapsuleCollider>().enabled = false;
             TurnOnRagdollv2();
             Debug.Log("hit");
+            //MMVibrationManager.Haptic(HapticTypes.MediumImpact);
         }
 
 

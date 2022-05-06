@@ -50,6 +50,10 @@ public class CarController : MonoBehaviour
     public int _doorbar;
     public int _windowbar;
     public int _frontbar;
+    public int _frontbar2;
+    public int _frontbar3;
+    public int _frontbar4;
+    public int armor;
 
     public bool isBreaking = false;
     public bool onGround;
@@ -71,6 +75,7 @@ public class CarController : MonoBehaviour
     public bool clickedTire;
     public bool gasUpgrade1;
     public bool isRoad1, isRoad2, isRoad3, isRoad4;
+    public bool hitGround;
     
 
 
@@ -84,6 +89,7 @@ public class CarController : MonoBehaviour
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
     public GameObject zombies;
     public GameObject newZombies;
+    public GameObject carTop;
     
     
     
@@ -106,7 +112,7 @@ public class CarController : MonoBehaviour
         currentGas = maxGas;
         motorPower = 7000;
         breakPower = 1000;
-
+        hitGround = true;
         highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
         /*_tire = PlayerPrefs.GetInt("tire", 0);
@@ -154,6 +160,10 @@ public class CarController : MonoBehaviour
          }*/
 
         _frontbar = PlayerPrefs.GetInt("frontbar", 0);
+        _frontbar2 = PlayerPrefs.GetInt("frontbar2", 0);
+        _frontbar3 = PlayerPrefs.GetInt("frontbar3", 0);
+        _frontbar4 = PlayerPrefs.GetInt("frontbar4", 0);
+        armor = PlayerPrefs.GetInt("armor",0);
         if(_frontbar == 1)
         {
             frontBar.SetActive(true);
@@ -161,7 +171,7 @@ public class CarController : MonoBehaviour
 
             
         }
-        if (_frontbar == 2)
+        if (_frontbar2 == 2)
         {
             frontbar2.SetActive(true);
             frontBarUpgradeButton2.transform.gameObject.SetActive(false);
@@ -169,7 +179,7 @@ public class CarController : MonoBehaviour
 
 
         }
-        if (_frontbar == 3)
+        if (_frontbar3 == 3)
         {
             frontbar3.SetActive(true);
             frontBarUpgradeButton3.transform.gameObject.SetActive(false);
@@ -181,7 +191,7 @@ public class CarController : MonoBehaviour
 
 
         }
-        if (_frontbar == 4)
+        if (_frontbar4 == 4)
         {
             frontbar4.SetActive(true);
             frontBarUpgradeButton4.transform.gameObject.SetActive(false);
@@ -369,7 +379,17 @@ public class CarController : MonoBehaviour
 
 
         }
-        if (score < 200)
+        if (score < 250)
+        {
+            //nitroUpgradeButton2.interactable = false;
+            frontBarUpgradeButton2.interactable = false;
+            //tireUpgradeButton.interactable = false;
+            //windowUpgradeButton.interactable = false;
+            //doorUpgradeButton2.interactable = false;
+
+
+        }
+        if (score < 300)
         {
             nitroUpgradeButton2.interactable = false;
             frontBarUpgradeButton2.interactable = false;
@@ -379,17 +399,13 @@ public class CarController : MonoBehaviour
 
 
         }
-        if (score < 300)
+        if(score < 500)
         {
             nitroUpgradeButton3.interactable = false;
-            frontBarUpgradeButton3.interactable = false;
-            //tireUpgradeButton.interactable = false;
-            //windowUpgradeButton.interactable = false;
             doorUpgradeButton3.interactable = false;
-
-
+            frontBarUpgradeButton4.interactable = false;
         }
-        if (score < 400)
+        if (score < 600)
         {
 
             frontBarUpgradeButton4.interactable = false;
@@ -423,20 +439,20 @@ public class CarController : MonoBehaviour
             frontBarUpgradeButton.transform.gameObject.SetActive(false);
             frontBarUpgradeButton2.transform.gameObject.SetActive(true);
         }
-        if (_frontbar == 2)
+        if (_frontbar2 == 2)
         {
 
             frontBarUpgradeButton2.transform.gameObject.SetActive(false);
             frontBarUpgradeButton3.transform.gameObject.SetActive(true);
         }
-        if (_frontbar == 3)
+        if (_frontbar3 == 3)
         {
 
 
             frontBarUpgradeButton4.transform.gameObject.SetActive(true);
             frontBarUpgradeButton3.transform.gameObject.SetActive(false);
         }
-        if (_frontbar == 4)
+        if (_frontbar4 == 4)
         {
 
 
@@ -578,7 +594,7 @@ public class CarController : MonoBehaviour
             }
             if (currentHealth <= 0)
             {
-                //crashedCar.SetActive(true);
+                crashedCar.SetActive(true);
                 //car.SetActive(false);
                 GameManager.Current.GameOver();
                 GameManager.Current.gameOverMenu.SetActive(true);
@@ -606,6 +622,10 @@ public class CarController : MonoBehaviour
                 GameManager.Current.gasGameOverMenu.SetActive(true);
                 gasHighScoreText.text = _distance.ToString() + " m";
             }
+
+            
+
+           
             /*if (hasNitro)
             {
                 motorPower = 10000;
@@ -619,6 +639,20 @@ public class CarController : MonoBehaviour
             if (SetParent.current.smashedTomb)
             {
                 StartCoroutine(DestroyTomb());
+            }
+
+            if (hitGround)
+            {
+                if(transform.rotation.eulerAngles.x > 80 && transform.rotation.eulerAngles.x < 91)
+                {
+                    GameManager.Current.GameOver();
+                    GameManager.Current.gameOverMenu.SetActive(true);
+                    GameManager.Current.isGameActive = false;
+                   rb.velocity = Vector3.zero;
+                    crashedCar.SetActive(true);
+                   ChangeBlendShape(100);
+
+                }
             }
 
 
@@ -692,7 +726,7 @@ public class CarController : MonoBehaviour
         //GameManager.Current.StartGame();
         _nitro = 2;
         PlayerPrefs.SetInt("nitro", _nitro);
-        ChangeScore(-200);
+        ChangeScore(-300);
 
         clickedNitro = true;
     }
@@ -705,7 +739,7 @@ public class CarController : MonoBehaviour
        // GameManager.Current.StartGame();
         _nitro = 3;
         PlayerPrefs.SetInt("nitro", _nitro);
-        ChangeScore(-300);
+        ChangeScore(-500);
 
         clickedNitro = true;
     }
@@ -717,6 +751,8 @@ public class CarController : MonoBehaviour
         frontBar.SetActive(true);
         //GameManager.Current.StartGame();
         _frontbar = 1;
+        armor = 1;
+        PlayerPrefs.SetInt("armor", armor);
         PlayerPrefs.SetInt("frontbar", _frontbar);
         ChangeScore(-100);
 
@@ -729,9 +765,11 @@ public class CarController : MonoBehaviour
         hasFrontBar = true;
         frontbar2.SetActive(true);
         //GameManager.Current.StartGame();
-        _frontbar = 2;
-        PlayerPrefs.SetInt("frontbar", _frontbar);
-        ChangeScore(-200);
+        _frontbar2 = 2;
+        armor = 2;
+        PlayerPrefs.SetInt("armor", armor);
+        PlayerPrefs.SetInt("frontbar2", _frontbar2);
+        ChangeScore(-250);
 
         clickedFrontBar = true;
     }
@@ -745,9 +783,11 @@ public class CarController : MonoBehaviour
         backLeftTire.SetActive(true);
         backRightTire.SetActive(true);
         //GameManager.Current.StartGame();
-        _frontbar = 3;
-        PlayerPrefs.SetInt("frontbar", _frontbar);
-        ChangeScore(-300);
+        _frontbar3 = 3;
+        armor = 3;
+        PlayerPrefs.SetInt("armor", armor);
+        PlayerPrefs.SetInt("frontbar3", _frontbar3);
+        ChangeScore(-400);
 
         clickedFrontBar = true;
     }
@@ -757,9 +797,11 @@ public class CarController : MonoBehaviour
         hasFrontBar = true;
         frontbar4.SetActive(true);
        // GameManager.Current.StartGame();
-        _frontbar = 4;
-        PlayerPrefs.SetInt("frontbar", _frontbar);
-        ChangeScore(-400);
+        _frontbar4 = 4;
+        armor = 4;
+        PlayerPrefs.SetInt("armor", armor);
+        PlayerPrefs.SetInt("frontbar4", _frontbar4);
+        ChangeScore(-600);
 
         clickedFrontBar = true;
     }
@@ -768,7 +810,7 @@ public class CarController : MonoBehaviour
         isDoorBar = true;
         hasDoorBar = true;
         //doorBar.SetActive(true);
-        GameManager.Current.StartGame();
+       // GameManager.Current.StartGame();
         _doorbar = 1;
         PlayerPrefs.SetInt("doorbar", _doorbar);
         ChangeScore(-100);
@@ -785,7 +827,7 @@ public class CarController : MonoBehaviour
         //GameManager.Current.StartGame();
         _doorbar = 2;
         PlayerPrefs.SetInt("doorbar", _doorbar);
-        ChangeScore(-200);
+        ChangeScore(-300);
 
         clickedDoorBar = true;
 
@@ -799,7 +841,7 @@ public class CarController : MonoBehaviour
         //GameManager.Current.StartGame();
         _doorbar = 3;
         PlayerPrefs.SetInt("doorbar", _doorbar);
-        ChangeScore(-300);
+        ChangeScore(-500);
 
         clickedDoorBar = true;
 

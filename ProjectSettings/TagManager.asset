@@ -17,6 +17,7 @@ TagManager:
   - HitPlace
   - tombstone
   - cartop
+  - Shovel
   layers:
   - Default
   - TransparentFX

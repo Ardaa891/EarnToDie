@@ -13,7 +13,7 @@ public class FlipController : MonoBehaviour
         Current = this;
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnCollisionEnter (Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
@@ -21,7 +21,23 @@ public class FlipController : MonoBehaviour
             GameManager.Current.gameOverMenu.SetActive(true);
             GameManager.Current.isGameActive = false;
             GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().velocity = Vector3.zero;
+            CarController.Current.crashedCar.SetActive(true);
+            CarController.Current.ChangeBlendShape(100);
             flipped = true;
         }
     }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            GameManager.Current.GameOver();
+            GameManager.Current.gameOverMenu.SetActive(true);
+            GameManager.Current.isGameActive = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().velocity = Vector3.zero;
+            flipped = true;
+        }
+    }*/
+
+
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using MoreMountains.NiceVibrations;
+//using MoreMountains.NiceVibrations;
 
 [RequireComponent(typeof(Collider))]
 public class ClickOrTapToExplode : MonoBehaviour {
@@ -15,7 +15,7 @@ public class ClickOrTapToExplode : MonoBehaviour {
         {
 			GetComponent<BoxCollider>().enabled = false;
 			StartExplosion();
-			MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+			//MMVibrationManager.Haptic(HapticTypes.MediumImpact);
 			CarController.Current.ChangeHealth(-5);
 			CarController.Current.ChangeBlendShape(2);
 		}

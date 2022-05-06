@@ -1,5 +1,5 @@
 using UnityEngine;
-using MoreMountains.NiceVibrations;
+//using MoreMountains.NiceVibrations;
 
 [RequireComponent(typeof(Collider))]
 public class Tombstone : MonoBehaviour {
@@ -15,7 +15,7 @@ public class Tombstone : MonoBehaviour {
         {
 			GetComponent<BoxCollider>().enabled = false;
 			StartExplosion();
-			MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
+			//MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
 			
 		}
     }
