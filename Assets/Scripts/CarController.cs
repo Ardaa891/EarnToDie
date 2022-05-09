@@ -113,8 +113,8 @@ public class CarController : MonoBehaviour
         motorPower = 7000;
         breakPower = 1000;
         hitGround = true;
-        highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-        highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
+       // highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+        //highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
         /*_tire = PlayerPrefs.GetInt("tire", 0);
         if (_tire == 1)
         {

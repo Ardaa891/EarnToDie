@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SplashScript : MonoBehaviour
 {
+    bool a;
     public string Scene_Name;
     // In this example we show how to invoke a coroutine and
     // continue executing the function in parallel.
@@ -13,17 +14,27 @@ public class SplashScript : MonoBehaviour
 
     void Start()
     {
+        a = true;
         coroutine = WaitAndPrint(3.0f);
         StartCoroutine(coroutine);
+        Invoke("ChangeA",3);
     }
 
     // every 2 seconds perform the print()
     private IEnumerator WaitAndPrint(float waitTime)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(waitTime);
-            SceneManager.LoadScene(Scene_Name);
+         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Scene_Name);
+        while (a && asyncLoad.isDone == false)
+        {   
+
+             yield return null;
+            // SceneManager.LoadSceneAsync(Scene_Name);
+            
         }
+    }
+
+    void ChangeA()
+    {
+        a = false;
     }
 }

@@ -59,6 +59,8 @@ public class EnemyController : MonoBehaviour
         speed = 5;
         capsule = GetComponent<CapsuleCollider>();
         slidervalue = HealthBar.Current.slider.value;
+
+       
     }
 
     private void FixedUpdate()

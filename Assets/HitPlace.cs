@@ -3,17 +3,70 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class HitPlace : MonoBehaviour
 {
+
+    
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
 
     public Text scoreText;
+
+     public int pointer;
+     
+     [Serializable]
+     public struct Pool
+    {
+     public Queue<GameObject> pooledObjects;
+     public GameObject objectPrefab;
+     public int poolSize;
+    }
+    
+
+    [SerializeField] private Pool[] pools = null;
+
+    /*private void Awake()
+    {
+       
+
+        for(int j = 0; j<pools.Length; j++)
+        {
+             pools[j].pooledObjects = new Queue<GameObject>();
+
+             for(int i = 0; i <pools[j]. poolSize; i++)
+             {
+                 GameObject obj = Instantiate(pools[j].objectPrefab);
+                 obj.SetActive(false);
+
+                 pools[j].pooledObjects.Enqueue(obj);
+
+
+             }
+
+        }
+
+    }*/
+
+   public GameObject GetPooledObject(int ObjectType)
+    {
+        if(ObjectType >= pools.Length ){
+            return null;
+        }
+
+        GameObject obj = pools[ObjectType].pooledObjects.Dequeue();
+        obj.SetActive(true);
+
+        pools[ObjectType].pooledObjects.Enqueue(obj);
+
+        return null;
+
+    }
     
     
     void Start()
     {
-        
+        pointer = 2;
     }
 
     
@@ -33,7 +86,37 @@ public class HitPlace : MonoBehaviour
         {
             //road2.position = new Vector3(road2.position.x, road2.position.y, road1.position.z + 500.0f);
             //isRoad1 = true;
-            Instantiate(road2Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+            //Instantiate(road2Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+
+            /*for(int j = 0; j<pools.Length; j++)
+        {
+             pools[j].pooledObjects = new Queue<GameObject>();
+
+             
+
+             for(int i = 0; i <pools[j]. poolSize; i++)
+             {
+                 GameObject obj = Instantiate(pools[j].objectPrefab2, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+                 obj.SetActive(true);
+
+                 pools[j].pooledObjects.Enqueue(obj);
+
+
+             }
+
+             
+
+        }*/
+
+        RoadSpawner.Current.pool[pointer].gameObject.SetActive(true);
+        if(pointer>=3 )
+        {
+            RoadSpawner.Current.pool[pointer-3].gameObject.SetActive(false);
+
+        }
+         
+        pointer ++;
+       
 
         }
         if (other.CompareTag("road2"))
@@ -41,9 +124,35 @@ public class HitPlace : MonoBehaviour
             //road3.position = new Vector3(road3.position.x, road3.position.y, road2.position.z + 500.0f);
             //Destroy(zombies);
             //isRoad2 = true;
-            Instantiate(road1Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+            //Instantiate(road1Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
 
            // Instantiate(road3Prefab, new Vector3(other.transform.GetComponentInParent<Transform>().transform.position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+
+           /*for(int j = 0; j<pools.Length; j++)
+        {
+             pools[j].pooledObjects = new Queue<GameObject>();
+
+             for(int i = 0; i <pools[j]. poolSize; i++)
+             {
+                 GameObject obj = Instantiate(pools[j].objectPrefab1, new Vector3(other.transform.GetComponentInParent<Transform>().position.x, other.transform.GetComponentInParent<Transform>().transform.position.y, other.transform.GetComponentInParent<Transform>().transform.position.z + 500), Quaternion.Euler(0, 180, 0));
+                 obj.SetActive(true);
+
+                 pools[j].pooledObjects.Enqueue(obj);
+
+
+             }
+
+        }*/
+
+        RoadSpawner.Current.pool[pointer].gameObject.SetActive(true);
+        if(pointer>=3 )
+        {
+            RoadSpawner.Current.pool[pointer-3].gameObject.SetActive(false);
+
+        }
+        pointer ++;
+
+        
 
         }
         if (other.CompareTag("road3"))

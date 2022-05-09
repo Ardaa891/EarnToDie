@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -330,6 +330,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8540285534844827058, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}
+      propertyPath: m_Color.a
+      value: 0.95686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540285534844827058, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
@@ -453,6 +457,10 @@ PrefabInstance:
       propertyPath: Scene_Name
       value: OneWayRoad
       objectReference: {fileID: 0}
+    - target: {fileID: 8540285536077215333, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8540285536077215335, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -461,5 +469,6 @@ PrefabInstance:
       propertyPath: Scene_Name
       value: Main_Level
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8540285536077215385, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3cce1dd1b8912374e89f064279e494d7, type: 3}

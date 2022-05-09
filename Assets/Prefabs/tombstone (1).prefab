@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8881138018471118774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0m
+  m_text: 98m
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1b9276bae6dc7154199d08fb3bcc5385, type: 2}
   m_sharedMaterial: {fileID: 5538921048320147815, guid: 1b9276bae6dc7154199d08fb3bcc5385, type: 2}
@@ -370,7 +370,7 @@ MonoBehaviour:
   InsideMaterial: {fileID: 2100000, guid: aed5736fbe97db749b68806a08842623, type: 2}
   FractureTemplate: {fileID: 2423095812460927233}
   PiecesParent: {fileID: 0}
-  NumFracturePieces: 3
+  NumFracturePieces: 2
   NumIterations: 2
   NumGenerations: 2
   FractureRadius: 0
