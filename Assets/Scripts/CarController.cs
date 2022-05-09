@@ -288,7 +288,7 @@ public class CarController : MonoBehaviour
         }
         if (score < 400)
         {
-            
+            frontBarUpgradeButton3.interactable = false;
             frontBarUpgradeButton4.interactable = false;
             
 
@@ -639,6 +639,7 @@ public class CarController : MonoBehaviour
             if (SetParent.current.smashedTomb)
             {
                 StartCoroutine(DestroyTomb());
+                highScoreText = null;
             }
 
             if (hitGround)
@@ -649,6 +650,7 @@ public class CarController : MonoBehaviour
                     GameManager.Current.gameOverMenu.SetActive(true);
                     GameManager.Current.isGameActive = false;
                    rb.velocity = Vector3.zero;
+                    rb.isKinematic = true;
                     crashedCar.SetActive(true);
                    ChangeBlendShape(100);
 
@@ -912,7 +914,7 @@ public class CarController : MonoBehaviour
 
     IEnumerator DestroyTomb()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(1.2f);
 
         fracturedParent.SetActive(false);
 
