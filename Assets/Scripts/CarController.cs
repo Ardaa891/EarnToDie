@@ -106,8 +106,10 @@ public class CarController : MonoBehaviour
 
     private void Awake()
     {
-        maxHealth = 100;
-        maxGas = 100;
+        maxHealth = PlayerPrefs.GetFloat("NewMaxHealth", 100);
+        currentHealth = PlayerPrefs.GetFloat("NewCurrentHealth", 100);
+        maxGas = PlayerPrefs.GetFloat("NewMaxGas", 100);
+        currentGas = PlayerPrefs.GetFloat("NewCurrentGas", 100);
         currentHealth = maxHealth;
         currentGas = maxGas;
         motorPower = 7000;
@@ -115,6 +117,12 @@ public class CarController : MonoBehaviour
         hitGround = true;
        highScoreText = _tombstone.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
        highScoreText.text = (PlayerPrefs.GetInt("maxdistance") + "m").ToString();
+        HealthBar.Current.SetMaxHealth(maxHealth);
+        HealthBar.Current.SetHealth(currentHealth);
+        GasBar.Current.SetMaxGas(maxGas);
+        GasBar.Current.SetGas(currentGas);
+
+        score = PlayerPrefs.GetInt("Money");
         /*_tire = PlayerPrefs.GetInt("tire", 0);
         if (_tire == 1)
         {
@@ -159,10 +167,10 @@ public class CarController : MonoBehaviour
 
          }*/
 
-        _frontbar = PlayerPrefs.GetInt("frontbar", 0);
+        _frontbar = PlayerPrefs.GetInt("frontbar",0);
         _frontbar2 = PlayerPrefs.GetInt("frontbar2", 0);
         _frontbar3 = PlayerPrefs.GetInt("frontbar3", 0);
-        _frontbar4 = PlayerPrefs.GetInt("frontbar4", 0);
+        _frontbar4 = PlayerPrefs.GetInt("frontbar4" , 0);
         armor = PlayerPrefs.GetInt("armor",0);
         if(_frontbar == 1)
         {
@@ -204,6 +212,7 @@ public class CarController : MonoBehaviour
 
         Instantiate(_tombstone, new Vector3(0, PlayerPrefs.GetFloat("lastypos"), PlayerPrefs.GetInt("maxdistance") *4), Quaternion.Euler(PlayerPrefs.GetFloat("lastxrot"),0,0));
         _tombstone.SetActive(true);
+
         
 
 
@@ -212,6 +221,7 @@ public class CarController : MonoBehaviour
     {
         
         Current = this;
+        HealthBar.Current.SetMaxHealth(maxHealth);
         currentGas = maxGas;
         rb = GetComponent<Rigidbody>();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -219,7 +229,7 @@ public class CarController : MonoBehaviour
         score = PlayerPrefs.GetInt("currentscore");
         parent = GameObject.FindGameObjectWithTag("Level").transform.GetChild(0).transform;
         rb.centerOfMass = centerOfMass;
-        HealthBar.Current.SetMaxHealth(maxHealth);
+        //HealthBar.Current.SetMaxHealth(maxHealth);
         GasBar.Current.SetMaxGas(maxGas);
 
         
@@ -363,6 +373,48 @@ public class CarController : MonoBehaviour
             tireUpgradeButton.transform.gameObject.SetActive(false);
         }*/
 
+        _frontbar = PlayerPrefs.GetInt("frontbar", 0);
+        _frontbar2 = PlayerPrefs.GetInt("frontbar2", 0);
+        _frontbar3 = PlayerPrefs.GetInt("frontbar3", 0);
+        _frontbar4 = PlayerPrefs.GetInt("frontbar4", 0);
+        armor = PlayerPrefs.GetInt("armor", 0);
+        if (_frontbar == 1)
+        {
+            frontBar.SetActive(true);
+            frontBarUpgradeButton.transform.gameObject.SetActive(false);
+
+
+        }
+        if (_frontbar2 == 2)
+        {
+            frontbar2.SetActive(true);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton.transform.gameObject.SetActive(false);
+
+
+        }
+        if (_frontbar3 == 3)
+        {
+            frontbar3.SetActive(true);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton.transform.gameObject.SetActive(false);
+            frontleftTire.SetActive(true);
+            backLeftTire.SetActive(true);
+            backRightTire.SetActive(true);
+
+
+        }
+        if (_frontbar4 == 4)
+        {
+            frontbar4.SetActive(true);
+            frontBarUpgradeButton4.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton2.transform.gameObject.SetActive(false);
+            frontBarUpgradeButton3.transform.gameObject.SetActive(false);
+
+
+        }
 
 
     }
@@ -399,6 +451,10 @@ public class CarController : MonoBehaviour
 
 
         }
+        if(score < 400)
+        {
+            frontBarUpgradeButton3.interactable = false;
+        }
         if(score < 500)
         {
             nitroUpgradeButton3.interactable = false;
@@ -431,6 +487,7 @@ public class CarController : MonoBehaviour
 
 
             nitroUpgradeButton3.transform.gameObject.SetActive(false);
+            UpgradeSystem.Current.gasButton.transform.gameObject.SetActive(true);
         }
 
         if (_frontbar == 1)
@@ -457,6 +514,7 @@ public class CarController : MonoBehaviour
 
 
             frontBarUpgradeButton4.transform.gameObject.SetActive(false);
+            UpgradeSystem.Current.healthButton.transform.gameObject.SetActive(true);
         }
         if (_doorbar == 1)
         {
@@ -475,6 +533,7 @@ public class CarController : MonoBehaviour
 
 
             doorUpgradeButton3.transform.gameObject.SetActive(false);
+            UpgradeSystem.Current.incomeButton.transform.gameObject.SetActive(true);
         }
 
 
@@ -742,7 +801,7 @@ public class CarController : MonoBehaviour
         _nitro = 3;
         PlayerPrefs.SetInt("nitro", _nitro);
         ChangeScore(-500);
-
+        
         clickedNitro = true;
     }
 
@@ -804,7 +863,7 @@ public class CarController : MonoBehaviour
         PlayerPrefs.SetInt("armor", armor);
         PlayerPrefs.SetInt("frontbar4", _frontbar4);
         ChangeScore(-600);
-
+        
         clickedFrontBar = true;
     }
     public void DoorBar()
@@ -844,7 +903,7 @@ public class CarController : MonoBehaviour
         _doorbar = 3;
         PlayerPrefs.SetInt("doorbar", _doorbar);
         ChangeScore(-500);
-
+        
         clickedDoorBar = true;
 
     }

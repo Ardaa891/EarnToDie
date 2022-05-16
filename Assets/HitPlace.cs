@@ -7,7 +7,7 @@ using System;
 
 public class HitPlace : MonoBehaviour
 {
-
+    public static HitPlace Current;
     
     public GameObject road1Prefab, road2Prefab, road3Prefab, road4Prefab;
 
@@ -67,6 +67,7 @@ public class HitPlace : MonoBehaviour
     void Start()
     {
         pointer = 2;
+        Current = this;
     }
 
     
@@ -240,6 +241,12 @@ public class HitPlace : MonoBehaviour
        
 
        
+    }
+
+    public void UpdateDamageAmount(int value)
+    {
+        EnemyController.Current.damageAmount += value;
+        PlayerPrefs.SetInt("DamageAmount", EnemyController.Current.damageAmount);
     }
 
    

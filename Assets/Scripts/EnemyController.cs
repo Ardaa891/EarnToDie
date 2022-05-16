@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     public Text scoreText;
     public float speed = 5;
     public CapsuleCollider capsule;
-
+    public int damageAmount;
     public float slidervalue;
     
 
@@ -34,6 +34,8 @@ public class EnemyController : MonoBehaviour
     {
         SetRagdollParts();
         Current = this;
+
+        damageAmount = PlayerPrefs.GetInt("DamageAmount", 6);
 
         /*if(CarController.Current._frontbar4 == 4)
         {
@@ -186,18 +188,23 @@ public class EnemyController : MonoBehaviour
 
             if (CarController.Current._doorbar == 0)
             {
-                CarController.Current.ChangeScore(5);
+                CarController.Current.ChangeScore(3);
             }else if(CarController.Current._doorbar == 1)
             {
-                CarController.Current.ChangeScore(10);
+                CarController.Current.ChangeScore(4);
             }
             else if (CarController.Current._doorbar == 2)
             {
-                CarController.Current.ChangeScore(15);
+                CarController.Current.ChangeScore(5);
             }
             else if (CarController.Current._doorbar == 3)
             {
-                CarController.Current.ChangeScore(20);
+                CarController.Current.ChangeScore(6);
+            }
+
+            if (UpgradeSystem.clicked)
+            {
+                CarController.Current.ChangeScore((damageAmount-7));
             }
 
             

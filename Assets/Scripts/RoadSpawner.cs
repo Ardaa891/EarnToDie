@@ -14,11 +14,11 @@ public class RoadSpawner : MonoBehaviour
     {
 
         Current = this;
-        pool = new GameObject[12];
+        pool = new GameObject[30];
         pool[0] = first;
         pool[1] = second;
 
-        for(int i = 2; i<12; i++)
+        for(int i = 2; i<30; i++)
         {
             if(i % 2 == 0)
             {

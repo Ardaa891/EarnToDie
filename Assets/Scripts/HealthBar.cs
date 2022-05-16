@@ -42,4 +42,12 @@ public class HealthBar : MonoBehaviour
     {
         slider.value = health;
     }
+
+    public void UpdateHealth(float value)
+    {
+        CarController.Current.maxHealth += value;
+        CarController.Current.currentHealth += value;
+        PlayerPrefs.SetFloat("NewMaxHealth", CarController.Current.maxHealth);
+        PlayerPrefs.SetFloat("NewCurrentHealth", CarController.Current.currentHealth);
+    }
 }

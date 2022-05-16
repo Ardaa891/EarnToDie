@@ -24,4 +24,12 @@ public class GasBar : MonoBehaviour
     {
         slider.value = gas;
     }
+
+    public void UpdateGas(float value)
+    {
+        CarController.Current.maxGas += value;
+        CarController.Current.currentGas += value;
+        PlayerPrefs.SetFloat("NewMaxGas", CarController.Current.maxGas);
+        PlayerPrefs.SetFloat("NewCurrentGas", CarController.Current.currentGas);
+    }
 }

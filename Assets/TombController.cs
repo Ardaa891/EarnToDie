@@ -8,12 +8,31 @@ public class TombController : MonoBehaviour
 {
     public GameObject tombStonePieces;
     public bool hitted;
+    public float zPos;
+    public float carPos;
+    public float distance;
 
     private void Start()
     {
         tombStonePieces = GameObject.FindGameObjectWithTag("FracturedPieces");
         //gameObject.GetComponent<Rigidbody>().drag = 20;
         GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+        
+
+        
+    }
+
+    private void FixedUpdate()
+    {
+        zPos = transform.position.z;
+        carPos = CarController.Current.distance * 4;
+        distance = (zPos - carPos);
+
+        if (distance <= 15)
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 
 
